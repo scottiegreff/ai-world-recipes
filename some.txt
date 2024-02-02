@@ -1,0 +1,473 @@
+{
+  "name": "recipe-app",
+  "author": "Scott Greff",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "prisma generate && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "postinstall": "prisma generate"
+  },
+  "dependencies": {
+    "@auth/mongodb-adapter": "^2.0.6",
+    "@auth/prisma-adapter": "^1.0.9",
+    "@next/font": "^14.0.1",
+    "@prisma/client": "^5.7.0",
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
+    "@radix-ui/react-navigation-menu": "^1.1.4",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@types/node": "20.5.8",
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.2.7",
+    "ai": "^2.2.20",
+    "autoprefixer": "10.4.15",
+    "bcrypt": "^5.1.1",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "cookie-cutter": "^0.2.0",
+    "cors": "^2.8.5",
+    "eslint": "8.48.0",
+    "eslint-config-next": "13.4.19",
+    "firebase": "^10.4.0",
+    "lucide-react": "^0.294.0",
+    "mongodb": "^6.3.0",
+    "mongoose": "^7.6.1",
+    "next": "13.4.19",
+    "next-auth": "^4.24.5",
+    "next-themes": "^0.2.1",
+    "node-fetch": "^3.3.2",
+    "openai": "^4.14.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hot-toast": "^2.4.1",
+    "react-icons": "^4.11.0",
+    "tailwind-merge": "^2.1.0",
+    "tailwindcss": "3.3.3",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "5.2.2"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.17",
+    "prisma": "^5.7.0"
+  }
+}
+
+
+
+import { authOptions } from "@/lib/authOptions";
+import NextAuth from "next-auth";
+
+const handler = NextAuth(authOptions);
+
+export { handler as GET, handler as POST };
+
+
+
+
+
+
+// lib/nextauthOptions.ts
+import GoogleProvider from "next-auth/providers/google";
+import GitHubProvider from "next-auth/providers/github";
+import clientPromise from "@/lib/mongobd";
+import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcrypt";
+import { AuthOptions, User } from "next-auth";
+import { toast } from "react-hot-toast";
+
+
+const prisma = new PrismaClient();
+
+export const authOptions = {
+
+
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_ID!,
+      clientSecret: process.env.GOOGLE_SECRET!,
+      // allowDangerousEmailAccountLinking: true,
+      profile(profile) {
+        return {
+          // Return all the profile information you need.
+          // The only truly required field is `id`
+          // to be able identify the account when added to a database
+          id: profile.sub,
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture,
+          // recipes: [],
+        };
+      },
+    }),
+    GitHubProvider({
+      clientId: process.env.GITHUB_ID!,
+      clientSecret: process.env.GITHUB_SECRET!,
+      // allowDangerousEmailAccountLinking: true,
+    }),
+    CredentialsProvider({
+      // The name to display on the sign in form (e.g. "Sign in with...")
+      name: "credentials",
+      // `credentials` is used to generate a form on the sign in page.
+      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
+      // e.g. domain, username, password, 2FA token, etc.
+      // You can pass any HTML attribute to the <input> tag through the object.
+      credentials: {
+        // username: { label: "Username", type: "text", placeholder: "jsmith" },
+        // password: {
+        //   label: "Password",
+        //   type: "password",
+        //   placeholder: "********",
+        // },
+        // email: {
+        //   label: "Email",
+        //   type: "email",
+        //   placeholder: "jsmail@email.com",
+        // },
+      },
+
+      async authorize(credentials: any) {
+        if (!credentials?.email || !credentials?.password) {
+          return null;
+        }
+        const user = await prisma.user.findUnique({
+          where: {
+            email: credentials.email,
+          },
+        });
+        if (!user || !user.password) {
+          return null;
+        }
+        const passwordMatch = await bcrypt.compare(
+          credentials.password,
+          user.password
+        );
+        if (!passwordMatch) {
+          return null;
+        }
+        return user;
+      },
+    }),
+  ],
+
+  session: {
+    strategy: "database",
+    // strategy: "jwt",
+  },
+
+  secret: process.env.NEXTAUTH_SECRET,
+
+  pages: {
+    signIn: "/login",
+    newUser: "/regiser",
+  },
+  callbacks: {
+    async signIn({
+      user,
+      account,
+      profile,
+    }: {
+      user: any;
+      account: any;
+      profile: any;
+    }) {
+      if (account?.provider === "google") {
+        const customUser = {
+          email: user.email,
+          name: user.name,
+          image: user.image,
+          // recipes: ["test"],
+
+          // Set additional custom fields if needed
+        };
+
+        return true;
+      }
+      return true;
+    },
+  },
+  // debug: process.env.NODE_ENV === "development",
+};
+
+// import type { OAuthConfig, OAuthUserConfig } from "."
+
+// export interface GoogleProfile extends Record<string, any> {
+//   aud: string
+//   azp: string
+//   email: string
+//   email_verified: boolean
+//   exp: number
+//   family_name: string
+//   given_name: string
+//   hd: string
+//   iat: number
+//   iss: string
+//   jti: string
+//   name: string
+//   nbf: number
+//   picture: string
+//   sub: string
+// }
+
+// export default function Google<P extends GoogleProfile>(
+//   options: OAuthUserConfig<P>
+// ): OAuthConfig<P> {
+//   return {
+//     id: "google",
+//     name: "Google",
+//     type: "oauth",
+//     wellKnown: "https://accounts.google.com/.well-known/openid-configuration",
+//     authorization: { params: { scope: "openid email profile" } },
+//     idToken: true,
+//     checks: ["pkce", "state"],
+//     profile(profile) {
+//       return {
+//         id: profile.sub,
+//         name: profile.name,
+//         email: profile.email,
+//         image: profile.picture,
+//       }
+//     },
+//     style: { logo: "/google.svg", bg: "#fff", text: "#000" },
+//     options,
+//   }
+// }
+
+
+
+
+
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL") // Only needed when using a cloud provider that doesn't support the creation of new databases, like Heroku. Learn more: https://pris.ly/d/migrate-shadow
+}
+
+generator client {
+  provider        = "prisma-client-js"
+
+}
+
+model Account {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String  @db.ObjectId
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.String
+  access_token       String?  @db.String
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.String
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  email         String?   @unique
+  password      String?
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+}
+
+
+import { MongoClient } from "mongodb";
+
+if (!process.env.MONGODB_URI) {
+  throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
+}
+
+const uri = process.env.MONGODB_URI;
+const options = {};
+
+let client;
+let clientPromise: Promise<MongoClient>;
+
+if (process.env.NODE_ENV === "development") {
+  // In development mode, use a global variable so that the value
+  // is preserved across module reloads caused by HMR (Hot Module Replacement).
+  let globalWithMongo = global as typeof globalThis & {
+    _mongoClientPromise?: Promise<MongoClient>;
+  };
+
+  if (!globalWithMongo._mongoClientPromise) {
+    client = new MongoClient(uri, options);
+    globalWithMongo._mongoClientPromise = client.connect();
+  }
+  clientPromise = globalWithMongo._mongoClientPromise;
+} else {
+  // In production mode, it's best to not use a global variable.
+  client = new MongoClient(uri, options);
+  clientPromise = client.connect();
+}
+
+// Export a module-scoped MongoClient promise. By doing this in a
+// separate module, the client can be shared across functions.
+export default clientPromise;
+
+
+
+
+
+
+
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  firstName     String
+  lastName      String
+  name          String?
+  password      String
+  email         String    @unique
+  emailVerified DateTime?
+  phone         String
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  recipes       Recipe[]
+}
+
+model Recipe {
+  id            Int @id @default(autoincrement())
+  body String
+  owner User @relation(fields: [ownerId], references: [id])
+  ownerId String
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+ 
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  firstName     String
+  lastName      String
+  name          String?
+  password      String
+  email         String    @unique
+  emailVerified DateTime?
+  phone         String
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  recipes       Recipe[]
+}
+
+model Recipe {
+  id            Int @id @default(autoincrement())
+  body String
+  owner User @relation(fields: [ownerId], references: [id])
+  ownerId String
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+
+

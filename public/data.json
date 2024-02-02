@@ -1,0 +1,312 @@
+{
+  "mealTimeData": [
+    {
+      "gptValue": "breakfast",
+      "image": "breakfast",
+      "name": "Breakfast",
+      "parent": "mealTime"
+    },
+    {
+      "gptValue": "lunch",
+      "image": "lunch",
+      "name": "Lunch",
+      "parent": "mealTime"
+    },
+    {
+      "gptValue": "dinner",
+      "image": "dinner",
+      "name": "Dinner",
+      "parent": "mealTime"
+    },
+    {
+      "gptValue": "snack",
+      "image": "Snack",
+      "name": "Snack",
+      "parent": "mealTime"
+    },
+    {
+      "gptValue": "dessert",
+      "image": "dessert",
+      "name": "Dessert",
+      "parent": "mealTime"
+    }
+  ],
+
+  "countryFlagData": [
+    {
+      "gptValue": "Afghan",
+      "image": "afghanistan",
+      "name": "Afghan - istan",
+      "parent": "country"
+    },
+    {
+      "gptValue": "Argentinian",
+      "image": "argentina",
+      "name": "Argentina",
+      "parent": "country"
+    },
+    {
+      "gptValue": "Australian",
+      "image": "australia",
+      "name": "Australian",
+      "parent": "country"
+    },
+    {
+      "gptValue": "Bahamian",
+      "image": "bahamas",
+      "name": "Bahamas",
+      "parent": "country"
+    },
+    {
+      "gptValue": "Canadian",
+      "image": "canada",
+      "name": "Canada",
+      "parent": "country"
+    },
+    {
+      "gptValue": "Chinese",
+      "image": "china",
+      "name": "China",
+      "parent": "country"
+    },
+    {
+      "gptValue": "Czechs",
+      "image": "czech_republic",
+      "name": "Czech Republic",
+      "parent": "country"
+    },
+    {
+      "gptValue": "Ethiopian",
+      "image": "ethiopia",
+      "name": "Ethiopia",
+      "parent": "country"
+    },
+    {
+      "gptValue": "French",
+      "image": "france",
+      "name": "France",
+      "parent": "country"
+    },
+    {
+      "gptValue": "German",
+      "image": "germany",
+      "name": "Germany",
+      "parent": "country"
+    },
+    {
+      "gptValue": "Greek",
+      "image": "greece",
+      "name": "Greece",
+      "parent": "country"
+    },
+    {
+      "gptValue": "Indian",
+      "image": "india",
+      "name": "India",
+      "parent": "country"
+    },
+    {
+      "gptValue": "Iranian",
+      "image": "iran",
+      "name": "Iran",
+      "parent": "country"
+    },
+    {
+      "gptValue": "Israeli",
+      "image": "israel",
+      "name": "Israel",
+      "parent": "country"
+    },
+    {
+      "gptValue": "Italian",
+      "image": "italy",
+      "name": "Italy",
+      "parent": "country"
+    },
+    {
+      "gptValue": "Jamaican",
+      "image": "jamaica",
+      "name": "Jamaica",
+      "parent": "country"
+    },
+    {
+      "gptValue": "Japanese",
+      "image": "japan",
+      "name": "Japan",
+      "parent": "country"
+    },
+    {
+      "gptValue": "Mexican",
+      "image": "mexico",
+      "name": "Mexico",
+      "parent": "country"
+    },
+    {
+      "gptValue": "Filipino",
+      "image": "philippines",
+      "name": "Philippines",
+      "parent": "country"
+    },
+    {
+      "gptValue": "Portuguese",
+      "image": "portugal",
+      "name": "Portugal",
+      "parent": "country"
+    },
+    {
+      "gptValue": "South African",
+      "image": "south_africa",
+      "name": "South Africa",
+      "parent": "country"
+    },
+    {
+      "gptValue": "Korean",
+      "image": "south_korea",
+      "name": "South Korea",
+      "parent": "country"
+    },
+    {
+      "gptValue": "Spanish",
+      "image": "spain",
+      "name": "Spain",
+      "parent": "country"
+    },
+    {
+      "gptValue": "Thai",
+      "image": "thailand",
+      "name": "Thailand",
+      "parent": "country"
+    },
+    {
+      "gptValue": "Turkish",
+      "image": "turkey",
+      "name": "Turkey",
+      "parent": "country"
+    },
+    {
+      "gptValue": "Ugandan",
+      "image": "uganda",
+      "name": "Uganda",
+      "parent": "country"
+    },
+    {
+      "gptValue": "English",
+      "image": "united_kingdom",
+      "name": "United Kingdom",
+      "parent": "country"
+    },
+
+    {
+      "gptValue": "American",
+      "image": "united_states",
+      "name": "United States",
+      "parent": "country"
+    },
+
+    {
+      "gptValue": "Vietnamese",
+      "image": "vietnam",
+      "name": "Vietnam",
+      "parent": "country"
+    },
+
+    {
+      "gptValue": "Zambian",
+      "image": "zambia",
+      "name": "Zambia",
+      "parent": "country"
+    }
+  ],
+
+  "restrictionData": [
+    {
+      "gptValue": "vegetarian",
+      "image": "vegetarian",
+      "name": "Vegetarian",
+      "parent": "restriction"
+    },
+    {
+      "gptValue": "meat",
+      "image": "meat",
+      "name": "Meat",
+      "parent": "restriction"
+    },
+    {
+      "gptValue": "vegan",
+      "image": "vegan",
+      "name": "Vegan",
+      "parent": "restriction"
+    },
+    {
+      "gptValue": "gluten free",
+      "image": "gluten_free",
+      "name": "Gluten Free",
+      "parent": "restriction"
+    },
+    {
+      "gptValue": "pescetarian",
+      "image": "pescetarian",
+      "name": "Pescetarian",
+      "parent": "restriction"
+    }
+  ],
+  "prepTimeData": [
+    {
+      "gptValue": "under 15 minutes",
+      "image": "fifteenMin",
+      "name": "15 Minutes",
+      "parent": "prepTime"
+    },
+    {
+      "gptValue": "under 30 minutes",
+      "image": "thirtyMin",
+      "name": "30 Minutes",
+      "parent": "prepTime"
+    },
+    {
+      "gptValue": "under 45 minutes",
+      "image": "fortyFiveMin",
+      "name": "45 Minutes",
+      "parent": "prepTime"
+    },
+    {
+      "gptValue": "under 60 minutes",
+      "image": "oneHour",
+      "name": "One Hour",
+      "parent": "prepTime"
+    },
+    {
+      "gptValue": "many hours",
+      "image": "manyHours",
+      "name": "More than 1 Hour",
+      "parent": "prepTime"
+    }
+  ],
+
+  "nutritionData": [
+    {
+      "gptValue": "very healthy",
+      "image": "veryHealthy",
+      "name": "Very Healthy",
+      "parent": "nutrition"
+    },
+    {
+      "gptValue": "semi-healthy",
+      "image": "semiHealthy",
+      "name": "Semi Healthy",
+      "parent": "nutrition"
+    },
+    {
+      "gptValue": "comfort food",
+      "image": "comfortFood",
+      "name": "Comfort Food",
+      "parent": "nutrition"
+    },
+    {
+      "gptValue": "indulging treat",
+      "image": "treat",
+      "name": "Treat",
+      "parent": "nutrition"
+    }
+  ]
+}
