@@ -20,7 +20,7 @@
     },
     {
       "gptValue": "snack",
-      "image": "Snack",
+      "image": "snack",
       "name": "Snack",
       "parent": "mealTime"
     },

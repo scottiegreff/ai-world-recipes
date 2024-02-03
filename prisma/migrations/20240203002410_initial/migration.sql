@@ -29,13 +29,13 @@ CREATE TABLE "Session" (
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
-    "firstName" TEXT NOT NULL,
-    "lastName" TEXT NOT NULL,
+    "firstName" TEXT,
+    "lastName" TEXT,
     "name" TEXT,
-    "password" TEXT NOT NULL,
+    "password" TEXT,
     "email" TEXT NOT NULL,
     "emailVerified" TIMESTAMP(3),
-    "phone" TEXT NOT NULL,
+    "phone" TEXT,
     "image" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
