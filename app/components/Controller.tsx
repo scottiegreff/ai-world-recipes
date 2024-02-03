@@ -118,11 +118,12 @@ export default function Controller({ onLoadData }: { onLoadData: any }) {
       </Accordion>
       <hr />
       {/* If  all prefrences are not selected show: Please input your preferences*/}
-      {userDietPrefArr[0] === "" ||
-      userDietPrefArr[1] === "" ||
-      userDietPrefArr[2] === "" ||
-      userDietPrefArr[3] === "" ||
-      userDietPrefArr[4] === "" ? (
+      {
+      userDietPrefArr[0] === "" ||    // mealTime
+      userDietPrefArr[1] === "" ||    // country
+      // userDietPrefArr[2] === "" ||    // dietaryRestrictions
+      userDietPrefArr[3] === "" ||    // prepTime
+      userDietPrefArr[4] === "" ? (   // nutrition
         <p className="mt-7 text-left p-4 text-red-500 text-lg md:text-2xl font-light">
           * Please input your preferences...
         </p>

@@ -28,7 +28,7 @@ const SignupPage = async () => {
         <p className="text-center p-2">Already Signed up?</p>
         <Link href={"/auth/signin"}>Sign In</Link>
       </div>
-      <ProvidersButtons />
+      {/* <ProvidersButtons /> */}
       <SignUpForm />
       {/* <Image src="/avatar-profile-icon.jpg" alt="Login Form" width={500} height={500} /> */}
     </div>

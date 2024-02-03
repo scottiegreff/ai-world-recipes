@@ -5,38 +5,53 @@ import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { IoPersonCircleSharp } from "react-icons/io5";
+import Image from "next/image";
 
 const SigninButton = () => {
   const { data: session } = useSession();
   const router = useRouter();
-
+  let userProfileImg = session?.user.image;
   let usersName = "";
   if (session?.user.firstName && session?.user.lastName) {
     usersName = `${session?.user?.firstName} ${session?.user?.lastName}`;
   } else if (session?.user.name) {
     usersName = session?.user?.name;
   }
-
   return (
     <div className="md:flex md:flex-row">
       {session && session.user ? (
         <>
-          <div className="flex flex-col justify-around items-center gap-1">
-            <div className="flex flex-row justify-around items-center gap-1">
-              <IoPersonCircleSharp className="text-3xl" />
-              <Link className="p-2 hover:text-green-800" href={"/profile"}>
-                {usersName}
-              </Link>
-            </div>
-            <Link
-              className="border ms-8 border-green-800 bg-slate-800 p-2 rounded-xl"
-              color="foreground"
-              href="/members"
+          <div className="flex flex-col md:flex-row justify-center items-end md:items-center gap-2 md:gap-5">
+            <Button
+              className="border p-1 h-8 md:p-5 border-green-800 bg-slate-800"
+              as={Link}
+              href={"/members"}
+              // onClick={() => signIn()}
             >
               Members
-            </Link>
+            </Button>
+            <div className="flex flex-row md:flex-row justify-none items-center gap-1 md:gap-1">
+            {session.user.image === null ? (
+              <IoPersonCircleSharp className="text-2xl md:text-3xl" />
+            ) : (
+              <Image
+                src={userProfileImg || "/avatar-profile-icon.jpg"}
+                alt="user profile image"
+                width={40}
+                height={40}
+                className="rounded-full"
+              />
+            )}
             <Link
-              className="p-2 ms-8 hover:text-green-800 transition-colors"
+              className="hover:text-green-800 text-sm md:text-lg"
+              href={"/profile"}
+            >
+              {usersName}
+            </Link>
+            </div>
+
+            <Link
+              className=" hover:text-green-800 transition-colors text-sm md:text-lg"
               href={"/api/auth/signout"}
             >
               Sign Out

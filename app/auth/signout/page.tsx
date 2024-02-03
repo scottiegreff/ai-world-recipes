@@ -23,12 +23,12 @@ const SignoutPage = ({ searchParams }: Props) => {
   // }, [session?.user]);
 
   return (
-    <div className="my-20 flex items-center justify-center flex-col ">
+    <div className="flex items-center justify-center flex-col ">
       <button
-        className="w-[50vw] md:w-[30vw] md:mb-10 py-2 px-3 md:py-2 md:px-20 text-white bg-gray-800 border-2 border-green-600 rounded-3xl text-[.75rem] md:text-md md:font-md shadow-2xl active:scale-[.99] active:shadow-none transform transition duration-150 hover:bg-gray-700 hover:text-white hover:border-none"
+        className="my-10 md:my-20 py-2 px-7 md:py-2 md:px-10 text-white bg-gray-900 border-2 border-green-800 rounded-2xl text-[.75rem] md:text-[1.25rem] md:font-md shadow-2xl active:scale-[.99] active:shadow-none transform transition duration-150 hover:bg-gray-700 hover:text-white hover:border-none"
         onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
           signOut();
-          // router.push("/");
+          router.push("/");
         }}
       >
         SIGN OUT
