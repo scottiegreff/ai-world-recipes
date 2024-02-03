@@ -8,6 +8,7 @@ import * as bcrypt from "bcrypt";
 import { User } from "@prisma/client";
 import type { NextAuthOptions } from "next-auth";
 
+
 // export const authOptions: AuthOptions = {
 export const options: NextAuthOptions = {
   pages: {
@@ -63,7 +64,7 @@ export const options: NextAuthOptions = {
         // This is Naive Way of Comparing The Passwords
         // const isPassowrdCorrect = credentials?.password === user.password;
         if (!credentials?.password) throw new Error("Please Provide Your Password");
-        const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
+        const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password as string);
 
         if (!isPasswordCorrect) throw new Error("User name or password is not correct");
 
