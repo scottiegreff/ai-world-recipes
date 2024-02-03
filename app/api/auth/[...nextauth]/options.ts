@@ -64,7 +64,8 @@ export const options: NextAuthOptions = {
         // This is Naive Way of Comparing The Passwords
         // const isPassowrdCorrect = credentials?.password === user.password;
         if (!credentials?.password) throw new Error("Please Provide Your Password");
-        const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password as string);
+        if(typeof(user.password) !== "string") throw new Error("First Name is not a string");
+        const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
 
         if (!isPasswordCorrect) throw new Error("User name or password is not correct");
 

@@ -14,16 +14,18 @@ import { prisma } from "@/lib/prisma";
 export async function registerUser(
   user: Omit<User, "id" | "emailVerified" | "image" | "name">
 ) {
+  const hashedPassword = await bcrypt.hash(user.password || '', 10);
   const result = await prisma.user.create({
     data: {
       ...user,
-      password: await bcrypt.hash(user.password as string, 10),
+      password: hashedPassword,
     },
   });
 
   const jwtUserId = signJwt({
     id: result.id,
   });
+  if(typeof(user.firstName) !== "string") throw new Error("First Name is not a string");
   const activationUrl = `${process.env.NEXTAUTH_URL}/auth/activation/${jwtUserId}`;
   const body = compileActivationTemplate(user.firstName, activationUrl);
   await sendMail({ to: user.email, subject: "Activate Your Account", body });
@@ -36,7 +38,11 @@ type ActivateUserFunc = (
 
 export const activateUser: ActivateUserFunc = async (jwtUserID) => {
   const payload = verifyJwt(jwtUserID);
-  const userId = payload?.id;
+if (!payload) {
+  // handle the case where payload is null or undefined
+  return "userNotExist";
+}
+const userId = payload.id;
   const user = await prisma.user.findUnique({
     where: {
       id: userId,
@@ -69,6 +75,7 @@ export async function forgotPassword(email: string) {
     id: user.id,
   });
   const resetPassUrl = `${process.env.NEXTAUTH_URL}/auth/resetPass/${jwtUserId}`;
+  if(typeof(user.firstName) !== "string") throw new Error("First Name is not a string");
   const body = compileResetPassTemplate(user.firstName, resetPassUrl);
   const sendResult = await sendMail({
     to: user.email,
