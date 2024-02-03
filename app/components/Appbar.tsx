@@ -19,7 +19,7 @@ const Appbar = () => {
           color="foreground"
           href="/"
         >
-          AI RECIPE APP
+          AI WORLD RECIPES
         </Link>
       </NavbarContent>
       <NavbarContent justify="end">
