@@ -2,6 +2,7 @@
 import { Delete } from "lucide-react";
 import { useRef, useState } from "react";
 import Recipe from "@/app/types/Recipe";
+import { user } from "@nextui-org/react";
 
 export default function GetUsersRecipe() {
   const [userRecipes, setUserRecipes] = useState<Recipe>();
@@ -18,7 +19,7 @@ export default function GetUsersRecipe() {
         throw new Error(`Error: ${response.status}`);
       }
       const userData = await response.json();
-      console.log("USER DATA: ", userData);
+      // console.log("USER DATA: ", userData);
       setUserRecipes(userData);
       setError(null);
     } catch (error: any) {
@@ -68,9 +69,16 @@ export default function GetUsersRecipe() {
     } else return;
   };
 
-  // Regex to check if the string starts with a number and the a parentheses
+//   const arr = [1, 2, 3, 4, 5];
+// const mappedFromEnd = arr.map((element, index, array) => {
+//   // Calculate the position from the end
+//   const positionFromEnd = array.length - 1 - index;
+//   // Apply your function as needed, here's a simple example
+//   return `Element ${element} is at position ${positionFromEnd} from the end`;
+// });
 
-  // Split the string into an array divided by numbers
+// console.log(mappedFromEnd);
+
 
   return (
     <>
@@ -97,30 +105,37 @@ export default function GetUsersRecipe() {
             CLOSE RECIPES
           </button>
 
-          <h1 className="text-2xl font-bold mb-10">Your Saved Recipes:</h1>
+          <h1 className="text-2xl font-bold md:mb-5">Your Saved Recipes:</h1>
 
-          {userRecipes.map((recipe) => (
-            <div
-              key={recipe.id}
-              className="flex flex-col justify-center items-center mb-10"
-            >
-              {recipe.body.includes("Recipe:") ? (
-                <h1 className="text-md mb-5">{recipe.body}</h1>
-              ) : (
-                <h1 className="text-md mb-5">Recipe: {recipe.body}</h1>
-              )}
-            </div>
-          ))}
+           {/* map through all the recipes from userRecipes.body and split them by the "/n" character and display them with margin between them */}
+                     
+          {userRecipes?.map((recipe) => {
+            return (
+              <div key={recipe.id} className="mb-5 pb-10 px-10 ">
+                <hr className="my-10" />
+                
+                {recipe.body.split("\n").map((item, index) => {
+                  return (
+                    <p className="my-2" key={index}>
+                      {item}
+                    </p>
+                  );
+                }
+                )}
+              </div>
+            );
+          }
+          )}
 
-          <button
+          {/* <button
             className="md:w-50 mb-20 py-2 px-3 md:py-2 md:px-7 bg-white text-red-500 border-2 border-red-500 rounded-3xl text-[.75rem] md:text-md md:font-md shadow-2xl active:scale-[.99] active:shadow-none transform transition duration-150 hover:bg-gray-700 hover:border-none"
             onClick={deleteRecipe}
           >
             DELETE ALL RECIPES!
-          </button>
+          </button> */}
           <button
             // ref={closeRecipesBtn}
-            className="md:w-50 mb-20 py-2 px-3 md:py-2 md:px-7 bg-gray-600 text-white border border-green-600 rounded-3xl text-[.75rem] md:text-md md:font-md shadow-2xl active:scale-[.99] active:shadow-none transform transition duration-150 hover:bg-gray-700 hover:border-none"
+            className="md:w-50 mb-20 py-2 px-3 md:py-2 md:px-7 mt-10 bg-gray-600 text-white border border-green-600 rounded-3xl text-[.75rem] md:text-md md:font-md shadow-2xl active:scale-[.99] active:shadow-none transform transition duration-150 hover:bg-gray-700 hover:border-none"
             onClick={closeRecipes}
           >
             CLOSE RECIPES

@@ -120,8 +120,8 @@ export default function Controller({ onLoadData }: { onLoadData: any }) {
       {/* If  all prefrences are not selected show: Please input your preferences*/}
       {
       userDietPrefArr[0] === "" ||    // mealTime
-      userDietPrefArr[1] === "" ||    // country
-      // userDietPrefArr[2] === "" ||    // dietaryRestrictions
+      // userDietPrefArr[1] === "" ||    // dietaryRestrictions
+      userDietPrefArr[2] === "" || // country 
       userDietPrefArr[3] === "" ||    // prepTime
       userDietPrefArr[4] === "" ? (   // nutrition
         <p className="mt-7 text-left p-4 text-red-500 text-lg md:text-2xl font-light">
