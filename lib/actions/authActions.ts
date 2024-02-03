@@ -25,10 +25,10 @@ export async function registerUser(
   const jwtUserId = signJwt({
     id: result.id,
   });
-  if(typeof(user.firstName) !== "string") throw new Error("First Name is not a string");
-  const activationUrl = `${process.env.NEXTAUTH_URL}/auth/activation/${jwtUserId}`;
-  const body = compileActivationTemplate(user.firstName, activationUrl);
-  await sendMail({ to: user.email, subject: "Activate Your Account", body });
+  // if(typeof(user.firstName) !== "string") throw new Error("First Name is not a string");
+  // const activationUrl = `${process.env.NEXTAUTH_URL}/auth/activation/${jwtUserId}`;
+  // const body = compileActivationTemplate(user.firstName, activationUrl);
+  // await sendMail({ to: user.email, subject: "Activate Your Account", body });
   return result;
 }
 
