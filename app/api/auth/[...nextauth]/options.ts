@@ -69,7 +69,7 @@ export const options: NextAuthOptions = {
 
         if (!isPasswordCorrect) throw new Error("User name or password is not correct");
 
-        if (!user.emailVerified) throw new Error("Please verify your email first!");
+        // if (!user.emailVerified) throw new Error("Please verify your email first!");
 
         const { password, ...userWithoutPass } = user;
         return userWithoutPass;
