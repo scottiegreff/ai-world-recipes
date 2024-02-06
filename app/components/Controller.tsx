@@ -3,13 +3,10 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import SelectionCard from "./SelectionCards";
 import Accordion from "./Accordion";
-import { PiNumberSquareOneFill } from "react-icons/pi";
-import { PiNumberSquareTwoLight } from "react-icons/pi";
-import { PiNumberSquareThreeFill } from "react-icons/pi";
-import { PiNumberSquareFourLight } from "react-icons/pi";
-import { PiNumberSquareFiveFill } from "react-icons/pi";
 import Chat from "./Chat";
 import DietaryPrefData from "@/app/types/DietaryPrefData";
+// import InstructionVid from "@/public/instructions.mp4"
+// import ReactPlayer from "react-player";
 
 const gptTempArray: string[] = new Array(5).fill("");
 let userDietPrefArr: string[] = new Array(5).fill("");
@@ -85,11 +82,23 @@ export default function Controller({ onLoadData }: { onLoadData: any }) {
         </h1>
       </div>
       <hr />
-      <div className="flex flex-col justify-center items-center mt-5 mb-10">
+      {/* <div className="flex flex-col justify-center items-center mt-5 mb-10">
         <h1 className="text-sm lg:text-xl text-center mt-3 mb-10">
           Instructions:
         </h1>
-      </div>
+        <ReactPlayer
+        width="500px"
+        height="400px"
+        url={InstructionVid}
+        controls={true}
+        // light is usefull incase of dark mode
+        light={false}
+        // picture in picture
+        pip={true}
+      />
+      <source src={InstructionVid} type="video/mp4" />
+      Your browser does not support the video tag.
+      </div> */}
       <hr />
       <Accordion title="Meal Time">
         <SelectionCard items={mealTimeData} onChildClick={handleChildClick} />

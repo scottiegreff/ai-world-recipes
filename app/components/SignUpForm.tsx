@@ -17,6 +17,7 @@ import { passwordStrength } from "check-password-strength";
 import PasswordStrength from "./PasswordStrength"
 import { registerUser } from "@/lib/actions/authActions";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z
   .object({
@@ -56,13 +57,14 @@ const FormSchema = z
 type InputType = z.infer<typeof FormSchema>;
 
 const SignUpForm = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     reset,
     control,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<InputType>({
     resolver: zodResolver(FormSchema),
   });
@@ -78,7 +80,9 @@ const SignUpForm = () => {
     const { accepted, confirmPassword, ...user } = data;
     try {
       const result = await registerUser(user);
-      toast.success("The User Registered Successfully.");
+      toast.success("You've Registered Successfully.");
+      if(result)
+      router.push("/auth/signin");
     } catch (error) {
       toast.error("Something Went Wrong!");
       console.error(error);
@@ -169,8 +173,8 @@ const SignUpForm = () => {
         <p className="text-red-500">{errors.accepted.message}</p>
       )}
       <div className="flex justify-center col-span-2">
-        <Button className="w-48" color="primary" type="submit">
-          Submit
+        <Button className="w-48" color="primary" type="submit" disabled={isSubmitting}>
+        {isSubmitting ? "Signing You Up..." : "Submit"}
         </Button>
       </div>
     </form>

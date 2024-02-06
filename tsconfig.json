@@ -31,8 +31,6 @@
     ".next/types/**/*.ts",
     "tailwind.config.ts",
     "src/app/home/page.tsx",
-    // "src/app/api/auth/[...nextauth]/lib/mongobd.ts",
-    // "mongodb.js",
     "src/app/api/auth/[...nextauth]/route.ts",
     "src/lib/authOptions.ts",
     "src/app/api/register/route.js",

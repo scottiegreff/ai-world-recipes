@@ -100,7 +100,7 @@ export default function Chat({
         <div className="flex text-white flex-col w-full py-10 mx-auto stretch">
         {messages.map((m) => (
             <div key={m.id} className="whitespace-pre-wrap my-10 leading-6">
-              {m.role === "assistant" ? `CHEF: 9000:\n ${m.content}` : ""}
+              {m.role === "assistant" ? `CHEF 9000:\n ${m.content}` : ""}
             </div>
           ))}
           <form onSubmit={handleSubmit}>
