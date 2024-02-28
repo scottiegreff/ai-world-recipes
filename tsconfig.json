@@ -35,6 +35,9 @@
     "src/lib/authOptions.ts",
     "src/app/api/register/route.js",
     "app/api/recipes/route.ts",
-    "lib/authOptions.ts", "app/api/auth/[...nextauth]/route.ts"  ],
+    "lib/authOptions.ts", "app/api/auth/[...nextauth]/route.ts",
+    "video.d.ts", "next-env.d.ts",
+  ],
+    
   "exclude": ["node_modules"]
 }

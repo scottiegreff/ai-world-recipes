@@ -1,13 +1,10 @@
 "use client";
 import SaveRecipe from "./SaveRecipe";
 import React, { useState, useEffect, useRef } from "react";
-import Message from "../interfaces/Message";
 import OpenAIResponse from "@/app/interfaces/OpenAIResponse";
-import RecipeDisplay from "./RecipeDisplay";
 import LoadingSpinner from "./LoadingSpinner";
 import { useChat } from "ai/react";
-// import { set } from "mongoose";
-import { count } from "console";
+import RecipePhoto from "./RecipePhoto";
 
 export default function Chat({
   userDietPrefArr,
@@ -15,22 +12,12 @@ export default function Chat({
   userDietPrefArr: string[];
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
-  // const formSubmitRef = useRef(null);
   let result: OpenAIResponse | undefined = undefined;
   const [chatCompObj, setChatCompObj] = useState<OpenAIResponse | undefined>();
   let newHistory = [];
   const [isFetching, setIsFetching] = useState(false);
   const [isGettingRecipes, setIsGettingRecipes] = useState(false);
   let [digitOnly, setDigitOnly] = useState("");
-
-  const [conversationHistory, setConversationHistory] = useState<Message[]>([
-    {
-      role: "system",
-      content:
-        "You are a stuck up chef and like to mock others. You are to the point. Once in a while, you like to give a history lesson of an ingredient.",
-      // "A helpful recipe generator that gives technical and historical information about the ingredients and cooking techniques."
-    },
-  ]);
 
   // Event handler for key down in textarea
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -48,15 +35,56 @@ export default function Chat({
     handleSubmit,
     isLoading,
   } = useChat({
-    initialInput: `Please give me 10 ${userDietPrefArr[2]} ${userDietPrefArr[0]} ${userDietPrefArr[4]} recipes. They are to be ${userDietPrefArr[1]} and able to be made in ${userDietPrefArr[3]}`,
+    initialInput: `Please give me 10, ${userDietPrefArr[2]}, ${userDietPrefArr[0]}, ${userDietPrefArr[4]} recipes. They are to be ${userDietPrefArr[1]} and able to be made in ${userDietPrefArr[3]}`,
   });
 
-  // if(messages[messages.length] === messages[1]) {
+  let recipeArr: any = [];
 
-  // }
+  const recipeName = "al pastor tacos";
+
+  async function fetchRecipeImg(recipeName: string) {
+    const result = await fetch(
+      `www.themealdb.com/api/json/v1/1/search.php?s=${recipeName}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    // console.log("result", result);
+    const data = await result.json();
+    console.log("data", data);
+    // const result = await fetch("/api/recipeImg", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ recipeName }),
+    // });
+    // console.log("result", result);
+  }
+
+  fetchRecipeImg(recipeName);
+
+  useEffect(() => {
+    if (!isLoading && messages[0] !== undefined) {
+      const regex = /\d\. (.*?):/;
+      const messageCopy: any = messages[1];
+      const messageContent = messageCopy?.content;
+      if (messageContent) {
+        const matches = messageContent.match(regex);
+        if (matches) {
+          for (let i = 0; i < matches.length; i++) {
+            recipeArr.push(matches[i]);
+            console.log("recipeArr", recipeArr);
+          }
+        }
+      }
+    }
+  }, [!isLoading]);
 
   // show the button to fetch the recipe ideas
-  // if (messages[0] === undefined) {
   if (messages[0] === undefined) {
     return (
       <>
@@ -98,7 +126,8 @@ export default function Chat({
     return (
       <>
         <div className="flex text-white flex-col w-full py-10 mx-auto stretch">
-        {messages.map((m) => (
+          <RecipePhoto />
+          {messages.map((m) => (
             <div key={m.id} className="whitespace-pre-wrap my-10 leading-6">
               {m.role === "assistant" ? `CHEF 9000:\n ${m.content}` : ""}
             </div>
@@ -128,12 +157,3 @@ export default function Chat({
     );
   }
 }
-
-// {messages.map((m) => (
-//   <div key={m.id} className="whitespace-pre-wrap my-10">
-//     <p className="text-green-600 text-lg font-bold mb-3">
-//       {m.role === "assistant" ? "CHEF 9000!: \n" : "You: \n"}
-//     </p>
-//     <p className="leading-relaxed text-white">{m.content}</p>
-//   </div>
-// ))}

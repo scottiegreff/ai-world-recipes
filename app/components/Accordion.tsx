@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect, ReactNode } from "react";
+import { FaChevronDown } from "react-icons/fa";
 
 interface AccordionProps {
   title: string;
@@ -20,12 +21,15 @@ const Accordion: React.FC<AccordionProps> = ({ title, children }) => {
 
   return (
     <div className="border-black rounded-lg overflow-hidden py-7">
-      <button
-        className="w-full text-left py-4 text-3xl lg:text-4xl xl:text-5xl font-bold"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        {title}
-      </button>
+      <div className="flex flex-row justify-start items-center">
+        <FaChevronDown className="me-5 text-3xl" />
+        <button
+          className="w-full text-left py-4 text-3xl lg:text-4xl xl:text-5xl font-bold"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {title}
+        </button>
+      </div>
       <div
         ref={contentRef}
         className="transition-max-height duration-700 ease-in-out overflow-hidden"

@@ -1,10 +1,13 @@
 /** @type {import('next').NextConfig} */
-// const withVideos = require('next-videos')
+const { withNextVideo } = require("next-video/process");
+
 const nextConfig = {
-  // experimental: {
-  //   serverActions: true,
-  //   // serverComponentsExternalPackages: ["mongoose"],
-  // },
+  experimental: {
+    serverActions: true,
+    // serverComponentsExternalPackages: ["mongoose"],
+  },
+
+ 
 
   images: {
     remotePatterns: [
@@ -18,9 +21,6 @@ const nextConfig = {
       // ... any other remote patterns you need
     ],
   },
-
-
-
 };
 
-module.exports = nextConfig;
+module.exports = withNextVideo(nextConfig);

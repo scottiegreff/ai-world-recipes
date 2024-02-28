@@ -21,12 +21,12 @@ export async function POST(req: Request) {
       messages[1].content = `Please give me the detailed recipe for #${recipeNumber} in the format "** Recipe: (Recipe Name ** /n ** Description: (description) ** /n ** Ingredients: (list of ingredients), ** /n ** Technique: (detailed technique) **`
     }
 
-
+    console.log("messages", messages)
     const response = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       stream: true,
       messages,
-      // max_tokens: 50,
+      // max_tokens: 150,
     });
  
     const stream = OpenAIStream(response);

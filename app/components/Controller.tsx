@@ -5,7 +5,8 @@ import SelectionCard from "./SelectionCards";
 import Accordion from "./Accordion";
 import Chat from "./Chat";
 import DietaryPrefData from "@/app/types/DietaryPrefData";
-// import InstructionVid from "@/public/instructions.mp4"
+import Video from "next-video";
+import InstructionVid from "@/videos/instructions.mp4";
 // import ReactPlayer from "react-player";
 
 const gptTempArray: string[] = new Array(5).fill("");
@@ -82,23 +83,12 @@ export default function Controller({ onLoadData }: { onLoadData: any }) {
         </h1>
       </div>
       <hr />
-      {/* <div className="flex flex-col justify-center items-center mt-5 mb-10">
+      <div className="flex flex-col justify-center items-center mt-5 mb-10">
         <h1 className="text-sm lg:text-xl text-center mt-3 mb-10">
           Instructions:
         </h1>
-        <ReactPlayer
-        width="500px"
-        height="400px"
-        url={InstructionVid}
-        controls={true}
-        // light is usefull incase of dark mode
-        light={false}
-        // picture in picture
-        pip={true}
-      />
-      <source src={InstructionVid} type="video/mp4" />
-      Your browser does not support the video tag.
-      </div> */}
+        <Video src={InstructionVid} />
+      </div>
       <hr />
       <Accordion title="Meal Time">
         <SelectionCard items={mealTimeData} onChildClick={handleChildClick} />
@@ -128,20 +118,21 @@ export default function Controller({ onLoadData }: { onLoadData: any }) {
       <hr />
       {/* If  all prefrences are not selected show: Please input your preferences*/}
       {
-      userDietPrefArr[0] === "" ||    // mealTime
-      // userDietPrefArr[1] === "" ||    // dietaryRestrictions
-      userDietPrefArr[2] === "" || // country 
-      userDietPrefArr[3] === "" ||    // prepTime
-      userDietPrefArr[4] === "" ? (   // nutrition
-        <p className="mt-7 text-left p-4 text-red-500 text-lg md:text-2xl font-light">
-          * Please input your preferences...
-        </p>
-      ) : (
-        // Show the GET RECIPE IDEAS button
-        <>
-          <Chat userDietPrefArr={userDietPrefArr} />
-        </>
-      )}
+        // userDietPrefArr[0] === "" ||    // mealTime
+        // userDietPrefArr[1] === "" ||    // dietaryRestrictions
+        // userDietPrefArr[2] === "" || // country
+        // userDietPrefArr[3] === "" ||    // prepTime
+        userDietPrefArr[4] === "" ? ( // nutrition
+          <p className="mt-7 text-left p-4 text-red-500 text-lg md:text-2xl font-light">
+            * Please input your preferences...
+          </p>
+        ) : (
+          // Show the GET RECIPE IDEAS button
+          <>
+            <Chat userDietPrefArr={userDietPrefArr} />
+          </>
+        )
+      }
     </>
   );
 }
