@@ -87,7 +87,14 @@ export default function Controller({ onLoadData }: { onLoadData: any }) {
         <h1 className="text-sm lg:text-xl text-center mt-3 mb-10">
           Instructions:
         </h1>
-        <Video src={InstructionVid} />
+        <Video
+          autoPlay={true}
+          controls={true}
+          loop={true}
+          style={{ maxWidth: "40rem" }}
+          accentColor="#000000"
+          src={InstructionVid}
+        />
       </div>
       <hr />
       <Accordion title="Meal Time">
@@ -117,22 +124,20 @@ export default function Controller({ onLoadData }: { onLoadData: any }) {
       </Accordion>
       <hr />
       {/* If  all prefrences are not selected show: Please input your preferences*/}
-      {
-        // userDietPrefArr[0] === "" ||    // mealTime
-        // userDietPrefArr[1] === "" ||    // dietaryRestrictions
-        // userDietPrefArr[2] === "" || // country
-        // userDietPrefArr[3] === "" ||    // prepTime
-        userDietPrefArr[4] === "" ? ( // nutrition
-          <p className="mt-7 text-left p-4 text-red-500 text-lg md:text-2xl font-light">
-            * Please input your preferences...
-          </p>
-        ) : (
-          // Show the GET RECIPE IDEAS button
-          <>
-            <Chat userDietPrefArr={userDietPrefArr} />
-          </>
-        )
-      }
+      {userDietPrefArr[0] === "" || // mealTime
+      // userDietPrefArr[1] === "" ||    // dietaryRestrictions
+      userDietPrefArr[2] === "" || // country
+      userDietPrefArr[3] === "" || // prepTime
+      userDietPrefArr[4] === "" ? ( // nutrition
+        <p className="mt-7 text-left p-4 text-red-500 text-lg md:text-2xl font-light">
+          * Please input your preferences...
+        </p>
+      ) : (
+        // Show the GET RECIPE IDEAS button
+        <>
+          <Chat userDietPrefArr={userDietPrefArr} />
+        </>
+      )}
     </>
   );
 }
