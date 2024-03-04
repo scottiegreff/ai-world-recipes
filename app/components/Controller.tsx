@@ -7,7 +7,6 @@ import Chat from "./Chat";
 import DietaryPrefData from "@/app/types/DietaryPrefData";
 import Video from "next-video";
 import InstructionVid from "@/videos/instructions.mp4";
-// import ReactPlayer from "react-player";
 
 const gptTempArray: string[] = new Array(5).fill("");
 let userDietPrefArr: string[] = new Array(5).fill("");
