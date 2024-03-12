@@ -60,3 +60,30 @@ export const POST = async function (req: NextRequest) {
   }
 }
 
+export const DELETE = async function (req: NextRequest) {
+  if (req.method == "DELETE") {
+    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+    if (!token) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+    const userId = token.sub;
+    const { id } = await req.json();
+    console.log("RECIPE ID: ", id);
+    console.log("USER ID: ", userId);
+    try {
+      const recipe = await prisma.recipe.delete({
+        where: {
+          id: Number(id),
+        },
+      });
+      if (recipe) return new NextResponse(JSON.stringify(recipe), { status: 200 });
+    } catch (error) {
+      return new NextResponse(
+        "Error in deleting a recipe in recipes/route.ts: " + error,
+        { status: 500 }
+      );
+    } finally {
+      await prisma.$disconnect();
+    }
+  }
+}

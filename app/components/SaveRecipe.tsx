@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState } from "react";
 import Toast from "./Toast";
 import { useRouter } from "next/navigation";
 import OpenAIResponse from "../interfaces/OpenAIResponse";
-import Messages from "@/app/types/Messages";
+import Messages from "@/app/types/Message";
 import { useSession } from "next-auth/react";
 import { prisma } from "@/lib/prisma";
 import { signJwt, verifyJwt } from "@/lib/jwt";
@@ -22,7 +22,7 @@ export default function SaveRecipe({
   const handleSaveRecipe = async () => {
     if (!user) {
       setShowToastForNoUser(true);
-      setTimeout(() => setShowToastForNoUser(false), 4000); // Hide the toast after 3 seconds
+      setTimeout(() => setShowToastForNoUser(false), 4000); // Hide the toast after 4 seconds
     }
     if (user && messagesObj) {
       const data = {
@@ -63,13 +63,10 @@ export default function SaveRecipe({
         show={showToastForNoUser}
       />
       <button
-        className="md:w-50 md:mb-10 py-2 px-3 md:py-2 md:px-20 text-white bg-gray-800 border-2 border-green-600 rounded-3xl text-[.75rem] md:text-md md:font-md shadow-2xl active:scale-[.99] active:shadow-none transform transition duration-150 hover:bg-gray-700 hover:text-white hover:border-none my-5"
+        className="w-[60vw] md:w-[20vw] mx-auto md:mb-10 py-2 md:py-2 text-white bg-gray-800 border-2 border-green-600 rounded-3xl text-[.75rem] md:text-md md:font-md shadow-2xl active:scale-[.99] active:shadow-none transform transition duration-150 hover:bg-gray-700 hover:text-white hover:border-none"
         onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
           handleSaveRecipe()
         }
-        // style={{
-        //   color: user ? "gray" : "red",
-        // }}
       >
         SAVE RECIPE
       </button>

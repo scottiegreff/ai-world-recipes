@@ -1,4 +1,4 @@
-type Messages = {
+type Message = {
   id: string;
   tool_call_id?: string;
   createdAt?: Date;
@@ -6,4 +6,4 @@ type Messages = {
   ui?: string | JSX.Element | JSX.Element[] | null | undefined;
   role: "system" | "user" | "assistant" | "function" | "data" | "tool";
 };
-export default Messages;
+export default Message;

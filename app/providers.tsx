@@ -3,11 +3,15 @@
 
 import { NextUIProvider } from "@nextui-org/react";
 import { SessionProvider } from "next-auth/react";
+import { Provider } from "react-redux";
+import { store } from "@/app/redux/store";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <SessionProvider>
-      <NextUIProvider>{children}</NextUIProvider>
+      <Provider store={store}>
+        <NextUIProvider>{children}</NextUIProvider>
+      </Provider>
     </SessionProvider>
   );
 }

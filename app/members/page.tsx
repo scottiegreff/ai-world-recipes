@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import Controller from "../components/Controller";
+import Controller from "../components/GenerateRecipesIdeasButton";
 import logo from "../../public/fork_knife_logo.svg";
 import GetUsersRecipe from "../components/GetUsersRecipe";
 import { options } from "@/app/api/auth/[...nextauth]/options";
@@ -7,6 +7,7 @@ import { getServerSession } from "next-auth/next";
 import React from "react";
 import { redirect } from "next/navigation";
 import dietaryPrefData from "@/public/data.json";
+import Home from "@/app/page"
 
 async function loadNames() {
   try {
@@ -36,7 +37,7 @@ export default async function Members() {
       </h1>
       <GetUsersRecipe />
       <div className="my-10 flex-col justify-center items center">
-        <Controller onLoadData={dietaryPrefData} />
+      <Home />
       </div>
     </>
   );

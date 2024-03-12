@@ -19,7 +19,6 @@ export default function GetUsersRecipe() {
         throw new Error(`Error: ${response.status}`);
       }
       const userData = await response.json();
-      // console.log("USER DATA: ", userData);
       setUserRecipes(userData);
       setError(null);
     } catch (error: any) {
@@ -31,7 +30,6 @@ export default function GetUsersRecipe() {
     recipeDisplay.current?.classList.remove("hidden");
     recipeDisplay.current?.classList.add("flex");
 
-    // closeRecipesBtn.current?.classList.remove("hidden");
     closeRecipesBtn.current?.classList.add("flex");
     closeRecipesBtn.current?.classList.add("flex-col");
   };
@@ -43,22 +41,20 @@ export default function GetUsersRecipe() {
     closeRecipesBtn.current?.classList.add("hidden");
   };
 
-  const deleteRecipe = async () => {
-    const alertOk = confirm(
-      "Are you sure you want to delete all your recipes?"
-    );
-    console.log("alertOk: ", alertOk);
+  const deleteRecipe = async (id: number) => {
+    const alertOk = confirm("Are you sure you want to delete your recipe?");
 
     if (alertOk) {
       try {
-        const response = await fetch("api/recipes/", {
+        const response = await fetch(`api/recipes/`, {
           method: "DELETE",
+          body: JSON.stringify({ id }),
         });
         if (!response.ok) {
           throw new Error(`Error: ${response.status}`);
         }
-        const userData = await response.json();
-        setUserRecipes(userData);
+        // const userData = await response.json();
+        handleFetchUser();
         setError(null);
       } catch (error: any) {
         setError(error.message);
@@ -68,17 +64,6 @@ export default function GetUsersRecipe() {
       }
     } else return;
   };
-
-//   const arr = [1, 2, 3, 4, 5];
-// const mappedFromEnd = arr.map((element, index, array) => {
-//   // Calculate the position from the end
-//   const positionFromEnd = array.length - 1 - index;
-//   // Apply your function as needed, here's a simple example
-//   return `Element ${element} is at position ${positionFromEnd} from the end`;
-// });
-
-// console.log(mappedFromEnd);
-
 
   return (
     <>
@@ -92,56 +77,54 @@ export default function GetUsersRecipe() {
         {error && <p>Error: {error}</p>}
       </div>
 
-      {userRecipes && (
-        <div
-          ref={recipeDisplay}
-          className="flex flex-col justify-center items-center mt-10 mb-10"
+      <div
+        ref={recipeDisplay}
+        className="flex flex-col justify-center items-center mt-5"
+      >
+        <button
+          className="md:w-50 mb-20 py-2 px-3 md:py-2 md:px-7 bg-gray-600 text-white border border-green-600 rounded-3xl text-[.75rem] md:text-md md:font-md shadow-2xl active:scale-[.99] active:shadow-none transform transition duration-150 hover:bg-gray-700 hover:border-none"
+          onClick={closeRecipes}
         >
-          <button
-            // ref={closeRecipesBtn}
-            className="md:w-50 mb-20 py-2 px-3 md:py-2 md:px-7 bg-gray-600 text-white border border-green-600 rounded-3xl text-[.75rem] md:text-md md:font-md shadow-2xl active:scale-[.99] active:shadow-none transform transition duration-150 hover:bg-gray-700 hover:border-none"
-            onClick={closeRecipes}
-          >
-            CLOSE RECIPES
-          </button>
+          CLOSE RECIPES
+        </button>
 
-          <h1 className="text-2xl font-bold md:mb-5">Your Saved Recipes:</h1>
+        <h1 className="text-2xl font-bold md:mb-5">Your Saved Recipes:</h1>
 
-           {/* map through all the recipes from userRecipes.body and split them by the "/n" character and display them with margin between them */}
-                     
-          {userRecipes?.map((recipe) => {
-            return (
-              <div key={recipe.id} className="mb-5 pb-10 px-10 ">
-                <hr className="my-10" />
-                
-                {recipe.body.split("\n").map((item, index) => {
-                  return (
-                    <p className="my-2" key={index}>
-                      {item}
-                    </p>
-                  );
-                }
-                )}
-              </div>
-            );
-          }
-          )}
+        {/* map through all the recipes from userRecipes.body and split them by the "/n" character and display them with margin between them */}
 
-          {/* <button
-            className="md:w-50 mb-20 py-2 px-3 md:py-2 md:px-7 bg-white text-red-500 border-2 border-red-500 rounded-3xl text-[.75rem] md:text-md md:font-md shadow-2xl active:scale-[.99] active:shadow-none transform transition duration-150 hover:bg-gray-700 hover:border-none"
-            onClick={deleteRecipe}
-          >
-            DELETE ALL RECIPES!
-          </button> */}
-          <button
-            // ref={closeRecipesBtn}
-            className="md:w-50 mb-20 py-2 px-3 md:py-2 md:px-7 mt-10 bg-gray-600 text-white border border-green-600 rounded-3xl text-[.75rem] md:text-md md:font-md shadow-2xl active:scale-[.99] active:shadow-none transform transition duration-150 hover:bg-gray-700 hover:border-none"
-            onClick={closeRecipes}
-          >
-            CLOSE RECIPES
-          </button>
-        </div>
-      )}
+        {userRecipes?.map((recipe, index) => {
+          return (
+            <div key={index} className="mb-5 pb-10 px-10 ">
+              <hr className="my-10" />
+              <p className="text-xl font-bold mb-5 text-red-500">{`Recipe: ${
+                index + 1
+              }`}</p>
+              {recipe.body.split("\n").map((item, index) => {
+                return (
+                  <p className="my-2" key={index}>
+                    {item}
+                  </p>
+                );
+              })}
+              <button
+                // ref={closeRecipesBtn}
+                className="md:w-50 mb-5 py-2 px-3 md:py-2 md:px-7 mt-10 bg-gray-600 text-white border border-red-600 rounded-3xl text-[.75rem] md:text-md md:font-md shadow-2xl active:scale-[.99] active:shadow-none transform transition duration-150 hover:bg-gray-700 hover:border-none"
+                onClick={() => deleteRecipe(recipe.id)}
+              >
+                DELETE RECIPES
+              </button>
+            </div>
+          );
+        })}
+
+        <button
+          // ref={closeRecipesBtn}
+          className="md:w-50 mb-20 py-2 px-3 md:py-2 md:px-7 mt-10 bg-gray-600 text-white border border-green-600 rounded-3xl text-[.75rem] md:text-md md:font-md shadow-2xl active:scale-[.99] active:shadow-none transform transition duration-150 hover:bg-gray-700 hover:border-none"
+          onClick={closeRecipes}
+        >
+          CLOSE RECIPES
+        </button>
+      </div>
     </>
   );
 }

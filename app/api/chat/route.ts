@@ -11,7 +11,7 @@ export const runtime = 'edge';
 export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
-
+    console.log("messages", messages)
     if(messages[0]){
       messages[0].content = `${ messages[0].content} and please return in the list format of "(Recipe Name): (short description of recipe)", and at the end give a interesting historical fact about one of the recipes` 
     }
