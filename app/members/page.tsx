@@ -7,7 +7,7 @@ import { getServerSession } from "next-auth/next";
 import React from "react";
 import { redirect } from "next/navigation";
 import dietaryPrefData from "@/public/data.json";
-import Home from "@/app/page"
+import Home from "@/app/page";
 
 async function loadNames() {
   try {
@@ -19,7 +19,11 @@ async function loadNames() {
     console.log(error);
   }
 }
-// *************************  USER'S PAGE !!! ****************************************************** //
+
+/**
+ * Component for the members page.
+ * @returns {JSX.Element} The Members component.
+ */
 export default async function Members() {
   const session = await getServerSession(options);
 
@@ -37,7 +41,7 @@ export default async function Members() {
       </h1>
       <GetUsersRecipe />
       <div className="my-10 flex-col justify-center items center">
-      <Home />
+        <Home />
       </div>
     </>
   );

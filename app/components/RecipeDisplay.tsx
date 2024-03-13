@@ -3,18 +3,30 @@ import SaveRecipe from "./SaveRecipe";
 import LoadingSpinner from "./LoadingSpinner";
 import ChatFormForRecipeIdeas from "./ChatFormForRecipeIdeas";
 import { useChat } from "ai/react";
-import RecipePhoto from "./RecipePhoto";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
 import ChatFormForRecipeSelection from "./ChatFormForRecipeSelection";
 
+/**
+ * Component for displaying the recipe ideas.
+ * @returns JSX element representing the recipe ideas.
+ */
 export default function RecipeDisplay() {
   const mealTime = useSelector(
-    (state: RootState) => state.mealTimeSelector.mealTime
+    (state: RootState) => (state as RootState).mealTimeSelector.mealTime
   );
   const countryFlag = useSelector(
     (state: RootState) => state.countryFlagSelector.countryFlag
+  );
+  const restriction = useSelector(
+    (state: RootState) => state.restrictionSelector.restriction
+  );
+  const prepTime = useSelector(
+    (state: RootState) => state.prepTimeSelector.prepTime
+  );
+  const healthiness = useSelector(
+    (state: RootState) => state.healthinessSelector.healthiness
   );
 
   const {
@@ -25,8 +37,7 @@ export default function RecipeDisplay() {
     handleSubmit,
     isLoading,
   } = useChat({
-    // initialInput: `Please give me 10, ${userDietPrefArr[2]}, ${userDietPrefArr[0]}, ${userDietPrefArr[4]} recipes. They are to be ${userDietPrefArr[1]} and able to be made in ${userDietPrefArr[3]}`,
-    initialInput: `Please give me 10, ${countryFlag}, ${mealTime} meals }`,
+    initialInput: `Please give me 10, ${countryFlag}, ${healthiness}, ${mealTime},  recipes. They are to be ${restriction} and able to be made in ${prepTime}`,
   });
 
   // Show LOADING SPINNER while fetching the recipe ideas

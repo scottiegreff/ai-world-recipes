@@ -7,6 +7,10 @@ import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { GiKnifeFork } from "react-icons/gi";
 
+/**
+ * Component for displaying buttons for signing in with Google or GitHub.
+ * @returns JSX element representing the sign-in buttons.
+ */
 
 export default function ProvidersButtons() {
   return (

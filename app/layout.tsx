@@ -1,3 +1,9 @@
+/**
+ * The layout component for the AI Recipe App.
+ *
+ * @param children - The child components to be rendered within the layout.
+ * @returns The layout component.
+ */
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";

@@ -3,6 +3,11 @@ import nodemailer from "nodemailer";
 import { activationTemplate } from "./emailTemplates/activation";
 import { resetPasswordTemplate } from "./emailTemplates/resetPass";
 
+/**
+ * Function to send an email.
+ * @param param0
+ * @returns
+ */
 export async function sendMail({
   to,
   subject,

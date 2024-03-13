@@ -14,7 +14,7 @@ import validator from "validator";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { passwordStrength } from "check-password-strength";
-import PasswordStrength from "./PasswordStrength"
+import PasswordStrength from "./PasswordStrength";
 import { registerUser } from "@/lib/actions/authActions";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
@@ -56,6 +56,10 @@ const FormSchema = z
 
 type InputType = z.infer<typeof FormSchema>;
 
+/**
+ * Component for signing up.
+ * @returns {JSX.Element} The SignUpForm component.
+ */
 const SignUpForm = () => {
   const router = useRouter();
   const {
@@ -81,8 +85,7 @@ const SignUpForm = () => {
     try {
       const result = await registerUser(user);
       toast.success("You've Registered Successfully.");
-      if(result)
-      router.push("/auth/signin");
+      if (result) router.push("/auth/signin");
     } catch (error) {
       toast.error("Something Went Wrong!");
       console.error(error);
@@ -173,8 +176,13 @@ const SignUpForm = () => {
         <p className="text-red-500">{errors.accepted.message}</p>
       )}
       <div className="flex justify-center col-span-2">
-        <Button className="w-48" color="primary" type="submit" disabled={isSubmitting}>
-        {isSubmitting ? "Signing You Up..." : "Submit"}
+        <Button
+          className="w-48"
+          color="primary"
+          type="submit"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Signing You Up..." : "Submit"}
         </Button>
       </div>
     </form>

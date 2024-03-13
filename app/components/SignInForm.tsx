@@ -25,6 +25,13 @@ const FormSchema = z.object({
 
 type InputType = z.infer<typeof FormSchema>;
 
+/**
+ * Component for signing in.
+ * @param {Props} props - The component props.
+ * @returns {JSX.Element} The SignInForm component.
+ * */
+
+
 const SignInForm = (props: Props) => {
   const router = useRouter();
   const [visiblePass, setVisiblePass] = useState(false);

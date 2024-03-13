@@ -6,6 +6,11 @@ type ToastProps = {
   show: boolean;
 };
 
+/**
+ * Component for the toast.
+ * @param {ToastProps} props - The component props.
+ * @returns {JSX.Element} The Toast component.
+ */
 const Toast = ({ message, show }: ToastProps) => {
   return (
     <div

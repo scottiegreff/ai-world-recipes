@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { redirect } from "next/navigation";
 import { useEffect } from "react";
 import { Link } from "@nextui-org/react";
-import ProvidersButtons from "@/app/components/ProvidersButtons"
+import ProvidersButtons from "@/app/components/ProvidersButtons";
 
 interface Props {
   searchParams: {
@@ -14,6 +14,13 @@ interface Props {
   };
 }
 
+/**
+ * Renders the SigninPage component.
+ *
+ * @param {Props} props - The component props.
+ * @param {URLSearchParams} props.searchParams - The search parameters.
+ * @returns {JSX.Element} The rendered SigninPage component.
+ */
 const SigninPage = ({ searchParams }: Props) => {
   // console.log({ searchParams });
   const router = useRouter();
@@ -29,7 +36,9 @@ const SigninPage = ({ searchParams }: Props) => {
     <div className="flex items-center justify-center flex-col mt-10 lg:w-[50vw] m-auto">
       {/* <ProvidersButtons /> */}
       <SignInForm callbackUrl={searchParams.callbackUrl} />
-      <Link className="mt-5 text-sm" href={"/auth/forgotPassword"}>Forgot Your Password?</Link>
+      <Link className="mt-5 text-sm" href={"/auth/forgotPassword"}>
+        Forgot Your Password?
+      </Link>
     </div>
   );
 };

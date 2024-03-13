@@ -4,9 +4,13 @@ import RecipeDisplay from "./RecipeDisplay";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
 
+/**
+ * Component for generating recipe ideas.
+ * @returns JSX element representing the generate recipe ideas button.
+ */
 export default function GenerateRecipeButton() {
   const mealTime = useSelector(
-    (state: RootState) => state.mealTimeSelector.mealTime
+    (state: RootState) => (state as RootState).mealTimeSelector.mealTime
   );
   const countryFlag = useSelector(
     (state: RootState) => state.countryFlagSelector.countryFlag

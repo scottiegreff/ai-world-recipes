@@ -1,4 +1,9 @@
-import React, { useState } from "react"
+/**
+ * Renders the Home page component.
+ *
+ * @returns The JSX element representing the Home page.
+ */
+import React, { useState } from "react";
 import dietaryPrefData from "@/public/data.json";
 import { sendMail } from "@/lib/mail";
 import SelectionCard from "./components/SelectionCards";
@@ -19,7 +24,6 @@ export default function Home() {
 
   return (
     <>
-   
       <hr />
 
       <div className="flex flex-col items-center justify-center">
@@ -39,6 +43,7 @@ export default function Home() {
           autoPlay={true}
           controls={true}
           loop={true}
+          poster={"https://image.mux.com/DsS00CMlsd027pZ1heJ7F8mDXWqpeSNqJYUUQdzdQSOqM/thumbnail.png?time=1"}
           style={{ maxWidth: "40rem" }}
           accentColor="#000000"
           src={InstructionVid}

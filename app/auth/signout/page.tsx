@@ -12,7 +12,15 @@ interface Props {
     callbackUrl?: string;
   };
 }
-
+/**
+ * SignoutPage component for handling user sign out.
+ *
+ * @component
+ * @param {Props} props - The component props.
+ * @param {Object} props.searchParams - The search parameters.
+ * @param {string} props.searchParams.callbackUrl - The callback URL after sign out.
+ * @returns {JSX.Element} The rendered SignoutPage component.
+ */
 const SignoutPage = ({ searchParams }: Props) => {
   const router = useRouter();
   const session = useSession();

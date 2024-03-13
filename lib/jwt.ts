@@ -8,6 +8,12 @@ const DEFAULT_SIGN_OPTION: SignOption = {
   expiresIn: "1d",
 };
 
+/**
+* Signs a JWT token with the given payload and options.
+ * @param payload 
+ * @param option 
+ * @returns 
+ */
 export function signJwt(
   payload: JwtPayload,
   option: SignOption = DEFAULT_SIGN_OPTION
@@ -17,6 +23,11 @@ export function signJwt(
   return token;
 }
 
+/**
+ * Verifies a JWT token and returns the payload.
+ * @param token 
+ * @returns 
+ */
 export function verifyJwt(token: string) {
   try {
     const secretKey = process.env.JWT_USER_ID_SECRET!;

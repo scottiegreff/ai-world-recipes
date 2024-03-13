@@ -1,7 +1,5 @@
 import React from "react";
-
-import { useChat } from "ai/react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
 import Message from "@/app/types/Message";
 import { ChangeEvent, FormEvent } from "react";
@@ -17,6 +15,11 @@ type ChatFormProps = {
   isLoading: boolean;
 };
 
+/**
+ * Component for the chat form for recipe ideas.
+ * @param {ChatFormProps} props - The component props.
+ * @returns {JSX.Element} The ChatFormForRecipeIdeas component.
+ */
 export default function ChatFormForRecipeIdeas({
   messages,
   input,
@@ -26,16 +29,20 @@ export default function ChatFormForRecipeIdeas({
   isLoading,
 }: ChatFormProps) {
   const mealTime = useSelector(
-    (state: RootState) => state.mealTimeSelector.mealTime
+    (state: RootState) => (state as RootState).mealTimeSelector.mealTime
   );
   const countryFlag = useSelector(
     (state: RootState) => state.countryFlagSelector.countryFlag
   );
-
-  const useChat = {
-    // initialInput: `Please give me 10, ${userDietPrefArr[2]}, ${userDietPrefArr[0]}, ${userDietPrefArr[4]} recipes. They are to be ${userDietPrefArr[1]} and able to be made in ${userDietPrefArr[3]}`,
-    initialInput: `Please give me 10, ${countryFlag}, ${mealTime} meals }`,
-  };
+  const restriction = useSelector(
+    (state: RootState) => state.restrictionSelector.restriction
+  );
+  const prepTime = useSelector(
+    (state: RootState) => state.prepTimeSelector.prepTime
+  );
+  const healthiness = useSelector(
+    (state: RootState) => state.healthinessSelector.healthiness
+  );
 
   return (
     <div className="flex text-white flex-col w-full my-10 mx-auto stretch">

@@ -7,6 +7,10 @@ import { useRouter } from "next/navigation";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import Image from "next/image";
 
+/**
+ * Component for displaying the sign-in button.
+ * @returns JSX element representing the sign-in button.
+ */
 const SigninButton = () => {
   const { data: session } = useSession();
   const router = useRouter();
@@ -31,23 +35,23 @@ const SigninButton = () => {
               Members
             </Button>
             <div className="flex flex-row md:flex-row justify-none items-center gap-1 md:gap-1">
-            {session.user.image === null ? (
-              <IoPersonCircleSharp className="text-2xl md:text-3xl" />
-            ) : (
-              <Image
-                src={userProfileImg || "/avatar-profile-icon.jpg"}
-                alt="user profile image"
-                width={40}
-                height={40}
-                className="rounded-full"
-              />
-            )}
-            <Link
-              className="hover:text-green-800 text-sm md:text-lg"
-              href={"/profile"}
-            >
-              {usersName}
-            </Link>
+              {session.user.image === null ? (
+                <IoPersonCircleSharp className="text-2xl md:text-3xl" />
+              ) : (
+                <Image
+                  src={userProfileImg || "/avatar-profile-icon.jpg"}
+                  alt="user profile image"
+                  width={40}
+                  height={40}
+                  className="rounded-full"
+                />
+              )}
+              <Link
+                className="hover:text-green-800 text-sm md:text-lg"
+                href={"/profile"}
+              >
+                {usersName}
+              </Link>
             </div>
 
             <Link

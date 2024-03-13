@@ -11,10 +11,15 @@ import {
 import { signJwt, verifyJwt } from "../jwt";
 import { prisma } from "@/lib/prisma";
 
+/**
+ * Function to register a user.
+ * @param user
+ * @returns
+ */
 export async function registerUser(
   user: Omit<User, "id" | "emailVerified" | "image" | "name">
 ) {
-  const hashedPassword = await bcrypt.hash(user.password || '', 10);
+  const hashedPassword = await bcrypt.hash(user.password || "", 10);
   const result = await prisma.user.create({
     data: {
       ...user,
@@ -36,13 +41,18 @@ type ActivateUserFunc = (
   jwtUserId: string
 ) => Promise<"userNotExist" | "alreadyActivated" | "success">;
 
+/**
+ * Function to activate a user.
+ * @param jwtUserId
+ * @returns
+ */
 export const activateUser: ActivateUserFunc = async (jwtUserID) => {
   const payload = verifyJwt(jwtUserID);
-if (!payload) {
-  // handle the case where payload is null or undefined
-  return "userNotExist";
-}
-const userId = payload.id;
+  if (!payload) {
+    // handle the case where payload is null or undefined
+    return "userNotExist";
+  }
+  const userId = payload.id;
   const user = await prisma.user.findUnique({
     where: {
       id: userId,
@@ -61,6 +71,11 @@ const userId = payload.id;
   return "success";
 };
 
+/**
+ * Function to send a password reset email.
+ * @param email
+ * @returns
+ */
 export async function forgotPassword(email: string) {
   const user = await prisma.user.findUnique({
     where: {
@@ -75,7 +90,8 @@ export async function forgotPassword(email: string) {
     id: user.id,
   });
   const resetPassUrl = `${process.env.NEXTAUTH_URL}/auth/resetPass/${jwtUserId}`;
-  if(typeof(user.firstName) !== "string") throw new Error("First Name is not a string");
+  if (typeof user.firstName !== "string")
+    throw new Error("First Name is not a string");
   const body = compileResetPassTemplate(user.firstName, resetPassUrl);
   const sendResult = await sendMail({
     to: user.email,
@@ -90,6 +106,12 @@ type ResetPasswordFucn = (
   password: string
 ) => Promise<"userNotExist" | "success">;
 
+/**
+ * Function to reset a password.
+ * @param jwtUserId
+ * @param password
+ * @returns
+ */
 export const resetPassword: ResetPasswordFucn = async (jwtUserId, password) => {
   const payload = verifyJwt(jwtUserId);
   if (!payload) return "userNotExist";

@@ -10,8 +10,12 @@ import { setRestriction } from "@/app/redux/restriction/restrictionSlice";
 import { setPrepTime } from "@/app/redux/prepTime/prepTimeSlice";
 import { setHealthiness } from "@/app/redux/healthiness/healthinessSlice";
 
+/**
+ * Component for the selection cards.
+ * @param {CardData} items - The items to display.
+ * @returns JSX element representing the selection cards.
+ */
 export default function SelectionCard({ items }: { items: CardData }) {
-  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
 
   const mealTime = useSelector(
@@ -30,33 +34,26 @@ export default function SelectionCard({ items }: { items: CardData }) {
     (state: RootState) => state.healthinessSelector.healthiness
   );
 
-  useEffect(() => {
-    if (!items) {
-      setIsLoading(true);
-    }
-    setIsLoading(false);
-  }, [items]);
-
   const [activeItem, setActiveItem] = useState(
     null || mealTime || countryFlag || restriction || prepTime || healthiness
   );
 
-  const handleClick = (parent: string, name: string) => {
+  const handleClick = (parent: string, gptValue: string, name: string) => {
     setActiveItem(name);
     if (parent === "mealTime") {
-      dispatch(setMealTime(name));
+      dispatch(setMealTime(gptValue));
     }
     if (parent === "country") {
-      dispatch(setCountryFlag(name));
+      dispatch(setCountryFlag(gptValue));
     }
     if (parent === "restriction") {
-      dispatch(setRestriction(name));
+      dispatch(setRestriction(gptValue));
     }
     if (parent === "prepTime") {
-      dispatch(setPrepTime(name));
+      dispatch(setPrepTime(gptValue));
     }
     if (parent === "nutrition") {
-      dispatch(setHealthiness(name));
+      dispatch(setHealthiness(gptValue));
     }
   };
   // Prepare the items' JSX elements outside of the main return statement
@@ -69,7 +66,7 @@ export default function SelectionCard({ items }: { items: CardData }) {
             activeItem === item.name ? "border-4 border-red-500" : ""
           } flex flex-col justify-center items-center w-[25%] h-[25%] mx-5 sm:w-[15%] sm:h-[15%] lg:w-[12%] lg:h-[12%] my-5 lg:my-8 rounded-full shadow-md transition-transform duration-200 ease-in-out transform hover:scale-[1.04] active:scale-[1.0] active:shadow-lg`}
           onClick={() => {
-            handleClick(item.parent, item.name);
+            handleClick(item.parent, item.gptValue, item.name);
           }}
         >
           <Image

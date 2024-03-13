@@ -8,11 +8,20 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { z } from "zod";
 
+/**
+ * Defines the form schema for the forgot password page.
+ */
 const FormSchema = z.object({
   email: z.string().email("Please enter a valid email!"),
 });
 
 type InputType = z.infer<typeof FormSchema>;
+
+/**
+ * Renders a form for the forgot password page.
+ *  * Allows users to submit a request to reset their password by providing their email.
+ * @returns JSX.Element
+ */
 
 const ForgotPasswordPage = () => {
   const {
@@ -24,6 +33,11 @@ const ForgotPasswordPage = () => {
     resolver: zodResolver(FormSchema),
   });
 
+  /**
+   * Handles the submission of the forgot password form.
+   *
+   * @param data - The form data containing the email.
+   */
   const submitRequest: SubmitHandler<InputType> = async (data) => {
     try {
       const result = await forgotPassword(data.email);
@@ -36,7 +50,7 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center mt-10">  
+    <div className="flex flex-col justify-center items-center mt-10">
       <form
         className="flex flex-col gap-2 p-5 border m-2 rounded-md shadow w-[70vw] md:w-[30vw]"
         onSubmit={handleSubmit(submitRequest)}

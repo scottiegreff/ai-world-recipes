@@ -1,3 +1,4 @@
+
 type CardData = {
   gptValue: string;
   image: string;

@@ -4,12 +4,12 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import * as bcrypt from "bcrypt";
-// import NextAuth from "next-auth/next";
 import { User } from "@prisma/client";
 import type { NextAuthOptions } from "next-auth";
 
-
-// export const authOptions: AuthOptions = {
+/**
+ * Configuration options for NextAuth.
+ */
 export const options: NextAuthOptions = {
   pages: {
     signIn: "/auth/signin",
@@ -34,10 +34,10 @@ export const options: NextAuthOptions = {
       },
     }),
     GitHubProvider({
-        clientId: process.env.GITHUB_ID!,
-        clientSecret: process.env.GITHUB_SECRET!,
-        allowDangerousEmailAccountLinking: true,
-      }),
+      clientId: process.env.GITHUB_ID!,
+      clientSecret: process.env.GITHUB_SECRET!,
+      allowDangerousEmailAccountLinking: true,
+    }),
     CredentialsProvider({
       name: "Credentials",
 
@@ -61,16 +61,19 @@ export const options: NextAuthOptions = {
 
         if (!user) throw new Error("User name or password is not correct");
 
-        // This is Naive Way of Comparing The Passwords
+        // Naive Way of Comparing The Passwords
         // const isPassowrdCorrect = credentials?.password === user.password;
-        if (!credentials?.password) throw new Error("Please Provide Your Password");
-        if(typeof(user.password) !== "string") throw new Error("First Name is not a string");
-        const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
-
-        if (!isPasswordCorrect) throw new Error("User name or password is not correct");
-
+        if (!credentials?.password)
+          throw new Error("Please Provide Your Password");
+        if (typeof user.password !== "string")
+          throw new Error("First Name is not a string");
+        const isPasswordCorrect = await bcrypt.compare(
+          credentials.password,
+          user.password
+        );
+        if (!isPasswordCorrect)
+          throw new Error("User name or password is not correct");
         // if (!user.emailVerified) throw new Error("Please verify your email first!");
-
         const { password, ...userWithoutPass } = user;
         return userWithoutPass;
       },
@@ -78,18 +81,26 @@ export const options: NextAuthOptions = {
   ],
 
   callbacks: {
+    /**
+     * Callback function to modify the JWT token.
+     * @param token - The JWT token.
+     * @param user - The user object.
+     * @returns The modified token.
+     */
     async jwt({ token, user }) {
       if (user) token.user = user as User;
       return token;
     },
 
+    /**
+     * Callback function to modify the session object.
+     * @param token - The JWT token.
+     * @param session - The session object.
+     * @returns The modified session object.
+     */
     async session({ token, session }) {
       session.user = token.user;
       return session;
     },
   },
 };
-
-// const handler = NextAuth(authOptions);
-
-// export { handler as GET, handler as POST };

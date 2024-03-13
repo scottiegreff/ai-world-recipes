@@ -1,8 +1,4 @@
 import React from "react";
-
-import { useChat } from "ai/react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/app/redux/store";
 import Message from "@/app/types/Message";
 import { ChangeEvent, FormEvent } from "react";
 
@@ -17,6 +13,11 @@ type ChatFormProps = {
   isLoading: boolean;
 };
 
+/**
+ * Component for the chat form for recipe selection.
+ * @param {ChatFormProps} props - The component props.
+ * @returns {JSX.Element} The ChatFormForRecipeSelection component.
+ */
 export default function ChatFormForRecipeSelection({
   messages,
   input,
@@ -25,24 +26,12 @@ export default function ChatFormForRecipeSelection({
   handleSubmit,
   isLoading,
 }: ChatFormProps) {
-  const mealTime = useSelector(
-    (state: RootState) => state.mealTimeSelector.mealTime
-  );
-  const countryFlag = useSelector(
-    (state: RootState) => state.countryFlagSelector.countryFlag
-  );
-
-  const useChat = {
-    // initialInput: `Please give me 10, ${userDietPrefArr[2]}, ${userDietPrefArr[0]}, ${userDietPrefArr[4]} recipes. They are to be ${userDietPrefArr[1]} and able to be made in ${userDietPrefArr[3]}`,
-    initialInput: `Please give me 10, ${countryFlag}, ${mealTime} meals }`,
-  };
-
   const chef9000 = (
     <p className="text-red-500 text-xl font-bold my-5">CHEF 9000:</p>
   );
+
   return (
     <div className="flex text-white flex-col w-full my-5 mx-auto">
-      {/* <RecipePhoto /> */}
       {messages.map((m) => (
         <div key={m.id} className="whitespace-pre-wrap leading-6 my-5">
           {m.role === "assistant" ? (

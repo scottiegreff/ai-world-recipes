@@ -4,6 +4,10 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 import { IoPersonCircleSharp } from "react-icons/io5";
 
+/**
+  * Component for the profile page.
+ * @returns {JSX.Element} The ProfilePage component.
+ */
 const ProfilePage = async () => {
   const session = await getServerSession(options);
   const user = session?.user;

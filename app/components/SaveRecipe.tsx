@@ -1,13 +1,18 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useState } from "react";
 import Toast from "./Toast";
 import { useRouter } from "next/navigation";
-import OpenAIResponse from "../interfaces/OpenAIResponse";
 import Messages from "@/app/types/Message";
 import { useSession } from "next-auth/react";
-import { prisma } from "@/lib/prisma";
-import { signJwt, verifyJwt } from "@/lib/jwt";
 
+/**
+ * Component for saving a recipe.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {Messages[] | undefined} props.messagesObj - The array of messages representing the recipe.
+ * @returns {JSX.Element} The SaveRecipe component.
+ */
 export default function SaveRecipe({
   messagesObj,
 }: {
@@ -28,10 +33,6 @@ export default function SaveRecipe({
       const data = {
         newRecipe: messagesObj[messagesObj.length - 1].content,
       };
-      // console.log("SAVE RECIPE: ", user, data);
-      // const jwtUserId = signJwt({
-      //   id: result.id,
-      // });
       try {
         const res = await fetch("/api/recipes", {
           method: "POST",

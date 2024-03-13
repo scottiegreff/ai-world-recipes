@@ -4,6 +4,13 @@ interface Props {
   passStrength: number;
 }
 
+/**
+ * Renders a password strength indicator component.
+ *
+ * @param {number} passStrength - The strength of the password (0-3).
+ * @returns {JSX.Element} - The rendered password strength component.
+ */
+
 const PasswordStrength = ({ passStrength }: Props) => {
   return (
     <div

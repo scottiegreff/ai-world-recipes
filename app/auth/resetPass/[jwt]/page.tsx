@@ -1,4 +1,4 @@
-import ResetPasswordForm from "@/app/components/ResetPasswordForm"
+import ResetPasswordForm from "@/app/components/ResetPasswordForm";
 import { verifyJwt } from "@/lib/jwt";
 
 interface Props {
@@ -7,6 +7,12 @@ interface Props {
   };
 }
 
+/**
+ * Renders the Reset Password page.
+ * @param {Props} props - The component props.
+ * @param {string} props.params.jwt - The JWT token from the URL parameters.
+ * @returns {JSX.Element} - The rendered Reset Password page.
+ */
 const ResetPasswordPage = ({ params }: Props) => {
   const payload = verifyJwt(params.jwt);
   if (!payload)

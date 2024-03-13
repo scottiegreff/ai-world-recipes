@@ -4,6 +4,9 @@ import { useRef, useState } from "react";
 import Recipe from "@/app/types/Recipe";
 import { user } from "@nextui-org/react";
 
+/**
+ * Component that fetches and displays the user's saved recipes.
+ */
 export default function GetUsersRecipe() {
   const [userRecipes, setUserRecipes] = useState<Recipe>();
   const [error, setError] = useState<string | null>(null);
@@ -34,12 +37,12 @@ export default function GetUsersRecipe() {
     closeRecipesBtn.current?.classList.add("flex-col");
   };
 
-  const closeRecipes = () => {
+  function closeRecipes() {
     recipeDisplay.current?.classList.remove("flex");
     recipeDisplay.current?.classList.add("hidden");
     closeRecipesBtn.current?.classList.remove("flex");
     closeRecipesBtn.current?.classList.add("hidden");
-  };
+  }
 
   const deleteRecipe = async (id: number) => {
     const alertOk = confirm("Are you sure you want to delete your recipe?");
@@ -64,7 +67,7 @@ export default function GetUsersRecipe() {
       }
     } else return;
   };
-
+  closeRecipes();
   return (
     <>
       <div className="flex justify-center items-center">
@@ -82,6 +85,7 @@ export default function GetUsersRecipe() {
         className="flex flex-col justify-center items-center mt-5"
       >
         <button
+          
           className="md:w-50 mb-20 py-2 px-3 md:py-2 md:px-7 bg-gray-600 text-white border border-green-600 rounded-3xl text-[.75rem] md:text-md md:font-md shadow-2xl active:scale-[.99] active:shadow-none transform transition duration-150 hover:bg-gray-700 hover:border-none"
           onClick={closeRecipes}
         >
