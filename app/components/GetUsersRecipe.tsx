@@ -67,7 +67,6 @@ export default function GetUsersRecipe() {
       }
     } else return;
   };
-  closeRecipes();
   return (
     <>
       <div className="flex justify-center items-center">

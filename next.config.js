@@ -3,7 +3,7 @@ const { withNextVideo } = require("next-video/process");
 
 const nextConfig = {
   experimental: {
-    serverActions: true,
+    // serverActions: true,
     // serverComponentsExternalPackages: ["mongoose"],
   },
 

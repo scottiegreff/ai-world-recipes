@@ -10,7 +10,6 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { z } from "zod";
-// import NextAuthProviders from "./NextAuthProviders";
 
 interface Props {
   callbackUrl?: string;
@@ -30,7 +29,6 @@ type InputType = z.infer<typeof FormSchema>;
  * @param {Props} props - The component props.
  * @returns {JSX.Element} The SignInForm component.
  * */
-
 
 const SignInForm = (props: Props) => {
   const router = useRouter();

@@ -18,7 +18,10 @@ export const GET = async function (req: NextRequest) {
     const userId = token.sub;
     try {
       const owner = await prisma.recipe.findMany({
-        where: { ownerId: userId },
+      where: { ownerId: userId },
+    // orderBy: {
+    //   createdAt: 'desc'
+    // }
       });
       if (owner)
         return new NextResponse(JSON.stringify(owner), { status: 200 });
